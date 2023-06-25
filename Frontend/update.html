@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="stylesheet.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>Registration</title>
+
+
+</head>
+
+<body>
+    <header>
+
+        <nav class="navbar">
+            <a href="adminhome.html" class="logo"><img src="EDUlogo.png" width="40px" display="flex"
+                    justify-content="center" align-items="center" height="40vh"> </a>
+            <a href="table.html">STUDENT LIST</a>
+            <a href="lecturerlist.html">LECTURER LIST </a>
+            <a href="#">
+                <span class="icon">
+                    <img src="face.png" class="User_Profile" style="width: 35px; border-radius: 50%; cursor: pointer;">
+                    <h4>User</h4>
+                </span>
+                <span class="text"></span>
+            </a>
+
+        </nav>
+
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+
+        <link rel="stylesheet" href="style1.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+        <style>
+            .navbar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px;
+                background-color: #f0f0f0;
+            }
+
+            .navbar .logo {
+                margin-right: 10px;
+            }
+
+            .navbar .navbar-item {
+                margin-right: 10px;
+            }
+        </style>
+
+    </header>
+    <script>
+        //show student by id
+        function showStudent() {
+            $.ajax({
+                url: 'http://localhost:3000/api/student/' + $('#SId').val(), type: 'get',
+                contentType: 'application/json',
+                dataType: "json",
+                success: function (data, textStatus, jQxhr) {
+                    $("#sid-form2").val(data.StudentId),
+                        $("#Fname-form2").val(data.FirstName),
+                        $("#Lname-form2").val(data.LastName),
+                        $("#email-form2").val(data.email),
+                        $("#city-form2").val(data.city),
+                        $("#course-form2").val(data.course),
+                        $("#guardian-form2").val(data.guardian),
+                        $("#subject-form2").val(data.subject)
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    alert(`Student Id: ${$('#SId').val()} not found`);
+                    console.log(errorThrown);
+                }
+            });
+        }
+
+        //update student by id
+        $(document).ready(function () {
+            $("#updateBtn").click(function () {
+                $.ajax({
+                    type: 'PUT',
+                    url: 'http://localhost:3000/api/student/' + $('#sid-form2').val(),
+                    contentType: 'application/json',
+                    data: JSON.stringify(
+                        {
+                            "StudentId": $("#sid-form2").val(),
+                            "FirstName": $("#Fname-form2").val(),
+                            "LastName": $("#Lname-form2").val(),
+                            "email": $("#email-form2").val(),
+                            "city": $("#city-form2").val(),
+                            "course": $("#course-form2").val(),
+                            "guardian": $("#guardian-form2").val(),
+                            "subject": $("#subject-form2").val()
+                        }),
+                    success: function (data, textStatus, jQxhr) {
+                        alert("Data updated");
+
+                    },
+                    error: function (xhr, textStatus, error) {
+                        alert("Error");
+                    }
+                });
+            });
+        });
+
+    </script>
+    <div class="container">
+        <form id="studentform">
+            <h2>Update Details</h2>
+            <div class="content">
+                <div class="input-box">
+                    <label for="SId">Search By Student ID</label>
+                    <input type="text" class="form-control" placeholder="Enter Student ID" name="SId" id="SId" >
+
+                </div>
+                <div class="button-container">
+                    <button type="submit" onclick="showStudent()">Show details</button>
+                </div>
+               
+
+                <div class="input-box">
+                    <label for="sid">Student ID</label>
+                    <input type="text" class="form-control" placeholder="Enter Student ID" name="sid" id="sid-form2"
+                        required>
+                </div>
+
+                <div class="input-box">
+                    <label for="name">First Name</label>
+                    <input type="text" class="form-control" placeholder="Enter First Name" name="Fname" id="Fname-form2"
+                        required>
+                </div>
+
+                <div class="input-box">
+                    <label for="lastname">Last Name</label>
+                    <input type="text" class="form-control" placeholder="Enter Last Name" name="Lname" id="Lname-form2"
+                        required>
+                </div>
+
+                <div class="input-box">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" placeholder="Enter valid email" name="email"
+                        id="email-form2" required>
+                </div>
+
+                <div class="input-box">
+                    <label for="city">Near city</label>
+                    <input type="text" class="form-control" placeholder="Enter near city" name="city" id="city-form2"
+                        required>
+                </div>
+
+                <div class="input-box">
+                    <label for="course">Course</label>
+                    <input type="text" class="form-control" placeholder="Enter course" name="course" id="course-form2"
+                        required>
+                </div>
+
+                <div class="input-box">
+                    <label for="guardian">Guardian</label>
+                    <input type="text" class="form-control" placeholder="Enter Guardian" name="guardian"
+                        id="guardian-form2" required>
+                </div>
+
+                <div class="input-box">
+                    <label for="subjects">Subjects</label>
+                    <input type="text" class="form-control" placeholder="Enter Subjects" name="subject"
+                        id="subject-form2" required>
+                </div>
+
+
+            </div>
+
+            <div class="button-container">
+                <button type="submit" id="updateBtn">Update</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+
+</html>

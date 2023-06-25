@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="stylesheet.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Registration</title>
+    <link rel="stylesheet" href="style1.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    
+</head>
+
+<body>
+    <header>
+
+        <nav class="navbar">
+            <a href="adminhome.html" class="logo"><img src="EDUlogo.png" width="40px" display="flex" justify-content="center"
+                    align-items="center" height="40vh"> </a>
+            <a href="table.html">STUDENT LIST</a>
+            <a href="lecturerlist.html">LECTURER LIST </a>
+            <a href="#">
+                <span class="icon">
+                    <img src="face.png" class="User_Profile" style="width: 35px; border-radius: 50%; cursor: pointer;">
+                    <h4>User</h4>
+                </span>
+                <span class="text"></span>
+            </a>
+
+        </nav>
+
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        
+        
+        
+        <style>
+            .navbar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px;
+                background-color: #f0f0f0;
+            }
+
+            .navbar .logo {
+                margin-right: 10px;
+            }
+
+            .navbar .navbar-item {
+                margin-right: 10px;
+            }
+        </style>
+        <script>
+         $(document).ready(function(){
+            $("#submitBtn").click(function() {
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://localhost:3000/api/student/',
+                    contentType: 'application/json',
+                    data: JSON.stringify(
+                    {
+                    "StudentId": $('#sid').val(),
+                    "FirstName": $("#Fname").val(),
+                    "LastName": $("#Lname").val(),
+                    "email": $("#email").val(),
+                    "city": $("#city").val(),
+                    "course": $("#course").val(),
+                    "guardian": $("#guardian").val(),
+                    "subject": $("#subject").val()
+                    }),
+                    success: function (data, textStatus, jQxhr) {
+                    alert("Data Inserted");
+                    
+                    },
+                    error: function (xhr, textStatus, error) {
+                    alert("Error");
+                    }
+                    });
+                    // Clear the input fields
+          $("#sid").val("");
+          $("#Fname").val("");
+          $("#Lname").val("");
+          $("#email").val("");
+          $("#city").val("");
+          $("#course").val("");
+          $("#guardian").val("");
+          $("#subject").val("");
+
+            });
+        });
+
+    </script>
+
+    </header>
+    
+    <div class="container">
+        <form id="studentform">
+            <h2>Student Details</h2>
+            <div class="content">
+
+                <div class="input-box">
+                    <label for="sid">Student ID</label>
+                    <input type="text" class="form-control" placeholder="Enter Student ID" name="sid" id="sid" >
+                </div>
+
+                <div class="input-box">
+                    <label for="name">First Name</label>
+                    <input type="text" class="form-control" placeholder="Enter First Name" name="Fname" id="Fname" >
+                </div>
+
+                <div class="input-box">
+                    <label for="lastname">Last Name</label>
+                    <input type="text" class="form-control" placeholder="Enter Last Name" name="Lname" id="Lname" >
+                </div>
+
+                <div class="input-box">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" placeholder="Enter valid email" name="email" id="email" >
+                </div>
+
+                <div class="input-box">
+                    <label for="city">Near city</label>
+                    <input type="text" class="form-control" placeholder="Enter near city" name="city" id="city" >
+                </div>
+
+                <div class="input-box">
+                    <label for="course">Course</label>
+                    <input type="text" class="form-control" placeholder="Enter course" name="course" id="course" >
+                </div>
+
+                <div class="input-box">
+                    <label for="guardian">Guardian</label>
+                    <input type="text" class="form-control" placeholder="Enter Guardian" name="guardian" id="guardian" >
+                </div>
+
+                <div class="input-box">
+                    <label for="subjects">Subjects</label>
+                    <input type="text" class="form-control" placeholder="Enter Subjects" name="subject" id="subject" >
+                </div>
+
+            
+            </div>
+
+            <div class="button-container">
+                <button type="submit" id="submitBtn" >Submit</button>
+            </div>
+        </form>
+    </div>
+    
+
+</body>
+
+</html>
